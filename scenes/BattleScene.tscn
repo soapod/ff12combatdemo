@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://xq68jnimynhu"]
+
+[ext_resource type="PackedScene" uid="uid://8vc1sb1d78ta" path="res://scenes/Player1.tscn" id="1_3mvhd"]
+[ext_resource type="PackedScene" uid="uid://trcn3lqrbgl1" path="res://scenes/Enemy1.tscn" id="2_28s16"]
+[ext_resource type="Script" uid="uid://cqmo05cigfhot" path="res://scripts/BattleManager.gd" id="3_ftvu5"]
+
+[node name="BattleScene" type="Node2D"]
+
+[node name="Player1" parent="." instance=ExtResource("1_3mvhd")]
+position = Vector2(123, 106)
+
+[node name="Enemy1" parent="." instance=ExtResource("2_28s16")]
+position = Vector2(339, 104)
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("3_ftvu5")
+
+[node name="ActionLog" type="VBoxContainer" parent="."]
+offset_left = 10.0
+offset_top = 497.0
+offset_right = 1130.0
+offset_bottom = 632.0
+size_flags_horizontal = 3
+
+[node name="LogTemplate" type="Label" parent="ActionLog"]
+visible = false
+layout_mode = 2
+text = "..."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://ct0mtyufplq1m"]
+
+[ext_resource type="Script" uid="uid://cyn5f511n1ote" path="res://data/Weapon.gd" id="1_2l8xc"]
+
+[resource]
+script = ExtResource("1_2l8xc")
+name = "Claws"
+power = 18
+combo_chance = 0.1
+crit_chance = 0.1
+crit_multiplier = 1.4
+metadata/_custom_type_script = "uid://cyn5f511n1ote"

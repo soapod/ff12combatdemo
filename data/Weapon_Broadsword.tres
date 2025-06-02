@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://vxjsyybhfwjv"]
+
+[ext_resource type="Script" uid="uid://cyn5f511n1ote" path="res://data/Weapon.gd" id="1_xtqhb"]
+
+[resource]
+script = ExtResource("1_xtqhb")
+name = "Broadsword"
+power = 24
+combo_chance = 0.05
+metadata/_custom_type_script = "uid://cyn5f511n1ote"
