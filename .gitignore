@@ -1,20 +1,36 @@
-# Godot 4+ specific ignores
+# Godot engine-generated folders
+.import/
 .godot/
 
-# Godot-specific ignores
-.import/
-export.cfg
+# Export presets and configs (optional: include if you want reproducible builds)
 export_presets.cfg
+export.cfg
 
-# Imported translations (automatically generated from CSV files)
-*.translation
-
-# Mono-specific ignores
+# Mono (C#) specific – only if you're not using C#
 .mono/
-data_*/
-mono_crash.*.json
-.idea/
+
+# VS Code project settings
 .vscode/
+
+# JetBrains Rider / IntelliJ / GodotTools
+.idea/
+*.sln
+*.csproj
+*.user
+*.pidb
+
+# System-specific cruft
 .DS_Store
 Thumbs.db
-README.md
+desktop.ini
+
+# Backup or temporary files
+*.tmp
+*.bak
+*.swp
+
+# Godot log files (optional)
+log.txt
+
+# Build artifacts (if you export)
+build/
