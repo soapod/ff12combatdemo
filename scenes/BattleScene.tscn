@@ -16,10 +16,14 @@ position = Vector2(339, 104)
 script = ExtResource("3_ftvu5")
 
 [node name="ActionLog" type="VBoxContainer" parent="."]
-offset_left = 10.0
-offset_top = 497.0
-offset_right = 1130.0
-offset_bottom = 632.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 203.0
+offset_right = 593.0
+offset_bottom = 636.0
+grow_vertical = 0
 size_flags_horizontal = 3
 
 [node name="LogTemplate" type="Label" parent="ActionLog"]

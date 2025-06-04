@@ -1,14 +1,24 @@
-# scripts/CombatAction.gd
-extends Resource
+extends RefCounted
 class_name CombatAction
 
-enum ActionType { ATTACK }
+# Represents a single combat action in battle (e.g., attack, spell, defend)
 
-var action_type: ActionType
+# Enumeration of possible action types
+enum ActionType { ATTACK, SPELL, DEFEND }
+
+# References to the entity performing the action and the target
 var source: CombatEntity
 var target: CombatEntity
-var payload := {}
+var type: ActionType
 
-func execute():
-	if source and target and action_type == ActionType.ATTACK:
-		source.perform_attack(target, payload)
+# Executes the action based on its type
+func execute() -> void:
+	match type:
+		ActionType.ATTACK:
+			source.perform_attack(target)
+		ActionType.SPELL:
+			# Placeholder for spell logic (to be implemented later)
+			pass
+		ActionType.DEFEND:
+			# Placeholder for defend logic (to be implemented later)
+			pass
