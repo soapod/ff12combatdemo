@@ -1,15 +1,17 @@
 extends Node
 class_name BattleManager
 
-# Orchestrates combat flow between all entities on the battlefield
+# Coordinates combat flow between all entities on the battlefield. The manager
+# is responsible for charging combatants, queuing their actions and executing
+# one action per frame.
 
 # --- State ---
 var combatants: Array = []           # All entities participating in combat
-var action_queue: Array = []         # Queue of pending combat actions
-enum State { IDLE, PROCESSING }
+var action_queue: Array = []         # Actions waiting to be executed (FIFO)
+enum State { IDLE, PROCESSING }      # PROCESSING ensures only one action runs
 var state: State = State.IDLE
 
-# Called when the scene is ready
+# Gathers references to the combatants in the scene and starts the battle
 func _ready() -> void:
 	# Reference initial combatants (assumes fixed names in the scene tree)
 	var player = get_parent().get_node("Player1")
@@ -17,28 +19,29 @@ func _ready() -> void:
 
 	combatants = [player, enemy]
 
-	# Initial log entry
+        # Announce the battle in the log
 	log_action("Battle started between %s and %s" % [
 		player.display_name,
 		enemy.display_name
 	])
 
-# Called every frame to manage combat flow
+# Called every frame to update charge time and run queued actions
 func _process(delta: float) -> void:
         if state == State.PROCESSING:
                 return
 
-	for entity in combatants:
-		if entity.is_alive:
-			entity.update_ct(delta)
+        for entity in combatants:      # Allow each living entity to gain CT
+                if entity.is_alive:
+                        entity.update_ct(delta)
 
-			if entity.is_ready:
+                        if entity.is_ready:
 				var target = get_random_enemy_for(entity)
 				if target:
 					var action = entity.generate_attack_action(target)
 					queue_action(action)
 					entity.reset_ct()
 
+        # Run the next action if any are queued
         if action_queue.size() > 0:
                 var action = action_queue.pop_front()
                 state = State.PROCESSING
@@ -66,9 +69,10 @@ func log_action(text: String) -> void:
 	if not template:
 		return
 
-	var new_entry = template.duplicate()
-	new_entry.text = text
-	new_entry.visible = true
+        var new_entry = template.duplicate()
+        new_entry.text = text
+        new_entry.visible = true
 
-	log_box.add_child(new_entry)
-	log_box.move_child(new_entry, log_box.get_child_count() - 2)
+        log_box.add_child(new_entry)
+        # Place the new entry above the hidden template node
+        log_box.move_child(new_entry, log_box.get_child_count() - 2)

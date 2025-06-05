@@ -1,7 +1,8 @@
 extends Node2D
 class_name CombatEntity
 
-# Enumeration for accessing stat dictionary keys
+# Enumeration for accessing stat dictionary keys. These are used as keys in the
+# `stats` dictionary so the code remains readable.
 enum Stat {
     HP,
     MAX_HP,
@@ -13,7 +14,8 @@ enum Stat {
     VITALITY
 }
 
-# Base class for all combat participants (players and enemies)
+# Base class for all combat participants (players and enemies). Child classes
+# simply override stats and equipment.
 
 # --- Identity & Vital Stats ---
 var display_name: String = "Unnamed"
@@ -35,11 +37,11 @@ var armor: Resource = null        # Placeholder: future Armor system
 var accessory: Resource = null    # Placeholder: future Accessory system
 
 # --- Combat State ---
-var ct: float = 0.0               # Charge Time
-var is_ready: bool = false
-var is_alive: bool = true
+var ct: float = 0.0               # Charge Time (0-100). At 100 the entity acts.
+var is_ready: bool = false        # True once CT reaches 100
+var is_alive: bool = true         # False when HP drops to zero
 
-# Called every frame by the BattleManager to charge up
+# Called every frame by the BattleManager to increment CT based on SPEED
 func update_ct(delta: float) -> void:
 	if not is_alive:
 		return
@@ -51,12 +53,12 @@ func update_ct(delta: float) -> void:
 		ct = 100.0
 		is_ready = true
 
-# Resets CT after an action is performed
+# Resets CT after an action is performed so the entity must charge again
 func reset_ct() -> void:
 	ct = 0.0
 	is_ready = false
 
-# Applies damage to this entity
+# Applies damage and handles death notification
 func take_damage(amount: float) -> void:
         stats[Stat.HP] -= amount
         if stats[Stat.HP] <= 0:
@@ -69,7 +71,8 @@ func take_damage(amount: float) -> void:
 		if battle_manager and battle_manager.has_method("log_action"):
 			battle_manager.log_action("%s has fallen!" % display_name)
 			
-# Performs an attack against another CombatEntity
+# Performs a weapon attack. Can chain multiple hits if the weapon's combo
+# chance succeeds.
 func perform_attack(target: CombatEntity) -> void:
 	if weapon == null or not target.is_alive:
 		return
@@ -90,7 +93,7 @@ func perform_attack(target: CombatEntity) -> void:
 
 		target.take_damage(damage)
 
-		# Logging the attack
+                # Log the attack details to the battle log
 		var log_text = "%s hits %s for %d%s (Hit %d)" % [
 			display_name,
 			target.display_name,
@@ -112,7 +115,7 @@ func perform_attack(target: CombatEntity) -> void:
 
 		combo_count += 1
 
-# Generates a combat action targeting another entity
+# Wraps an attack into a CombatAction resource for the BattleManager
 func generate_attack_action(target: CombatEntity) -> CombatAction:
 	var action = CombatAction.new()
 	action.source = self
