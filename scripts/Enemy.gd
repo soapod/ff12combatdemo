@@ -1,12 +1,13 @@
 extends CombatEntity
 class_name Enemy
 
-# Represents an AI-controlled enemy combatant
-# Inherits all base stats, CT, attack logic, etc. from CombatEntity
+# Represents an AI-controlled enemy combatant.
+# Behaviour mostly comes from `CombatEntity`.
 
 func _ready() -> void:
-	display_name = "Enemy"
-	level = 10
+        # Set default name and stats for this enemy instance
+        display_name = "Enemy"
+        level = 10
 
 	# Example stats — override per enemy type or prefab
 	stats = {
@@ -26,7 +27,7 @@ func _ready() -> void:
 	accessory = null
 
 func _process(delta: float) -> void:
-	# Simple real-time HP bar update
-	var hp_bar = get_node("HPBar")
+        # Update the HP bar to reflect any damage taken
+        var hp_bar = get_node("HPBar")
 	hp_bar.max_value = stats[CombatEntity.Stat.MAX_HP]
 	hp_bar.value = stats[CombatEntity.Stat.HP]

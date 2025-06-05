@@ -1,12 +1,13 @@
 extends CombatEntity
 class_name PlayerCharacter
 
-# Represents a player-controlled character
-# Inherits all stats, charge time, and attack logic from CombatEntity
+# Represents a player-controlled character.
+# Inherits all core behaviour from `CombatEntity`.
 
 func _ready() -> void:
-	display_name = "Vaan"
-	level = 12
+        # Initialise this player's stats
+        display_name = "Vaan"
+        level = 12
 
 	# Player stats — adjust per character
 	stats = {
@@ -26,7 +27,7 @@ func _ready() -> void:
 	accessory = null
 
 func _process(delta: float) -> void:
-	# Simple real-time HP bar update
-	var hp_bar = get_node("HPBar")
+        # Refresh the on-screen HP bar each frame
+        var hp_bar = get_node("HPBar")
 	hp_bar.max_value = stats[CombatEntity.Stat.MAX_HP]
 	hp_bar.value = stats[CombatEntity.Stat.HP]
