@@ -25,8 +25,8 @@ func _ready() -> void:
 
 # Called every frame to manage combat flow
 func _process(delta: float) -> void:
-        if state == State.PROCESSING:
-                return
+	if state == State.PROCESSING:
+		return
 
 	for entity in combatants:
 		if entity.is_alive:
@@ -39,11 +39,11 @@ func _process(delta: float) -> void:
 					queue_action(action)
 					entity.reset_ct()
 
-        if action_queue.size() > 0:
-                var action = action_queue.pop_front()
-                state = State.PROCESSING
-                action.execute()
-                state = State.IDLE
+	if action_queue.size() > 0:
+		var action = action_queue.pop_front()
+		state = State.PROCESSING
+		action.execute()
+		state = State.IDLE
 
 # Adds a new action to the queue
 func queue_action(action: CombatAction) -> void:
