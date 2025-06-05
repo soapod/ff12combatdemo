@@ -67,10 +67,6 @@ func take_damage(amount: float) -> void:
 		is_alive = false
 		# TODO: Handle death animation or removal if needed
 		
-		# Log death to battle log
-		var battle_manager = get_tree().get_current_scene().get_node("BattleManager")
-		if battle_manager and battle_manager.has_method("log_action"):
-			battle_manager.log_action("%s has fallen!" % display_name)
 			
 # Calculates damage and applies it to the target. May chain multiple hits
 func perform_attack(target: CombatEntity) -> void:
@@ -93,18 +89,6 @@ func perform_attack(target: CombatEntity) -> void:
 
 		target.take_damage(damage)
 
-		# Write the attack summary to the battle log
-		var log_text = "%s hits %s for %d%s (Hit %d)" % [
-			display_name,
-			target.display_name,
-			damage,
-			" CRITICAL!" if is_crit else "",
-			combo_count
-			]
-
-		var battle_manager = get_tree().get_current_scene().get_node("BattleManager")
-		if battle_manager and battle_manager.has_method("log_action"):
-			battle_manager.log_action(log_text)
 
 		if not target.is_alive:
 			break

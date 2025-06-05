@@ -20,11 +20,6 @@ func _ready() -> void:
 
 		combatants = [player, enemy]      # Order is not important in this demo
 
-		# Announce the start of battle in the on-screen log
-		log_action("Battle started between %s and %s" % [
-				player.display_name,
-				enemy.display_name
-		])
 
 # Called every frame to update CT gauges and perform actions when ready
 func _process(delta: float) -> void:
@@ -63,20 +58,3 @@ func get_random_enemy_for(source: CombatEntity) -> CombatEntity:
 						return entity
 		return null
 
-# Adds a labelled message to the UI element named "ActionLog"
-func log_action(text: String) -> void:
-	var log_box = get_tree().get_current_scene().get_node("ActionLog")
-	if not log_box:
-		return
-
-	var template = log_box.get_node("LogTemplate")
-	if not template:
-		return
-
-		var new_entry = template.duplicate()
-		new_entry.text = text
-		new_entry.visible = true
-
-		log_box.add_child(new_entry)
-		# Insert above the template so the newest entry appears last
-		log_box.move_child(new_entry, log_box.get_child_count() - 2)
