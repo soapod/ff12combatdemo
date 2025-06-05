@@ -1,20 +1,32 @@
 extends Node2D
 class_name CombatEntity
 
+# Enumeration for accessing stat dictionary keys
+enum Stat {
+    HP,
+    MAX_HP,
+    MP,
+    MAX_MP,
+    STRENGTH,
+    MAGIC,
+    SPEED,
+    VITALITY
+}
+
 # Base class for all combat participants (players and enemies)
 
 # --- Identity & Vital Stats ---
 var display_name: String = "Unnamed"
 var level: int = 1
 var stats: Dictionary = {
-	"hp": 100,
-	"max_hp": 100,
-	"mp": 0,
-	"max_mp": 0,
-	"strength": 10,
-	"magic": 10,
-	"speed": 10,
-	"vitality": 10
+        Stat.HP: 100,
+        Stat.MAX_HP: 100,
+        Stat.MP: 0,
+        Stat.MAX_MP: 0,
+        Stat.STRENGTH: 10,
+        Stat.MAGIC: 10,
+        Stat.SPEED: 10,
+        Stat.VITALITY: 10
 }
 
 # --- Equipment ---
@@ -32,7 +44,7 @@ func update_ct(delta: float) -> void:
 	if not is_alive:
 		return
 
-	var speed = stats.get("speed", 10)
+        var speed = stats.get(Stat.SPEED, 10)
 	ct += delta * speed
 
 	if ct >= 100.0:
@@ -46,9 +58,9 @@ func reset_ct() -> void:
 
 # Applies damage to this entity
 func take_damage(amount: float) -> void:
-	stats["hp"] -= amount
-	if stats["hp"] <= 0:
-		stats["hp"] = 0
+        stats[Stat.HP] -= amount
+        if stats[Stat.HP] <= 0:
+                stats[Stat.HP] = 0
 		is_alive = false
 		# TODO: Handle death animation or removal if needed
 		
@@ -66,7 +78,7 @@ func perform_attack(target: CombatEntity) -> void:
 
 	while true:
 		var weapon_power = weapon.power
-		var base = (weapon_power * (stats.get("strength", 10) + level)) / 2.0
+                var base = (weapon_power * (stats.get(Stat.STRENGTH, 10) + level)) / 2.0
 		var variance = randf_range(1.0, 1.125)
 		var damage = base * variance
 

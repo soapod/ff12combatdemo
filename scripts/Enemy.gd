@@ -9,16 +9,16 @@ func _ready() -> void:
 	level = 10
 
 	# Example stats — override per enemy type or prefab
-	stats = {
-		"hp": 300,
-		"max_hp": 300,
-		"mp": 0,
-		"max_mp": 0,
-		"strength": 16,
-		"magic": 8,
-		"speed": 12,
-		"vitality": 8
-	}
+        stats = {
+                CombatEntity.Stat.HP: 300,
+                CombatEntity.Stat.MAX_HP: 300,
+                CombatEntity.Stat.MP: 0,
+                CombatEntity.Stat.MAX_MP: 0,
+                CombatEntity.Stat.STRENGTH: 16,
+                CombatEntity.Stat.MAGIC: 8,
+                CombatEntity.Stat.SPEED: 12,
+                CombatEntity.Stat.VITALITY: 8
+        }
 
 	# Equip a weapon (adjust per enemy)
 	weapon = preload("res://data/Weapon_Broadsword.tres")
@@ -27,6 +27,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	# Simple real-time HP bar update
-	var hp_bar = get_node("HPBar")
-	hp_bar.max_value = stats["max_hp"]
-	hp_bar.value = stats["hp"]
+        var hp_bar = get_node("HPBar")
+        hp_bar.max_value = stats[CombatEntity.Stat.MAX_HP]
+        hp_bar.value = stats[CombatEntity.Stat.HP]
