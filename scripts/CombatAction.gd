@@ -1,17 +1,21 @@
 extends RefCounted
 class_name CombatAction
 
-# Represents a single combat action in battle (e.g., attack, spell, defend)
+# Lightweight object describing something a combatant will do
 
 # Enumeration of possible action types
-enum ActionType { ATTACK, SPELL, DEFEND }
+enum ActionType {
+        ATTACK,    # Standard weapon attack
+        SPELL,     # Magical ability (not implemented)
+        DEFEND     # Defensive stance (not implemented)
+}
 
 # References to the entity performing the action and the target
 var source: CombatEntity
 var target: CombatEntity
 var type: ActionType
 
-# Executes the action based on its type
+# Executes the action depending on `type`
 func execute() -> void:
 	match type:
 		ActionType.ATTACK:
