@@ -5,9 +5,9 @@ class_name CombatAction
 
 # Enumeration of possible action types
 enum ActionType {
-        ATTACK,    # Standard weapon attack
-        SPELL,     # Magical ability (not implemented)
-        DEFEND     # Defensive stance (not implemented)
+		ATTACK,    # Standard weapon attack
+		SPELL,     # Magical ability (not implemented)
+		DEFEND     # Defensive stance (not implemented)
 }
 
 # References to the entity performing the action and the target

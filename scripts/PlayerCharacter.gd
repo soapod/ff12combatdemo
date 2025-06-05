@@ -5,9 +5,9 @@ class_name PlayerCharacter
 # Inherits all core behaviour from `CombatEntity`.
 
 func _ready() -> void:
-        # Initialise this player's stats
-        display_name = "Vaan"
-        level = 12
+	# Initialise this player's stats
+	display_name = "Vaan"
+	level = 12
 
 	# Player stats — adjust per character
 	stats = {
@@ -27,7 +27,7 @@ func _ready() -> void:
 	accessory = null
 
 func _process(delta: float) -> void:
-        # Refresh the on-screen HP bar each frame
-        var hp_bar = get_node("HPBar")
+	# Refresh the on-screen HP bar each frame
+	var hp_bar = get_node("HPBar")
 	hp_bar.max_value = stats[CombatEntity.Stat.MAX_HP]
 	hp_bar.value = stats[CombatEntity.Stat.HP]

@@ -4,15 +4,15 @@ class_name CombatEntity
 # Enumeration for accessing stat dictionary keys
 # Each derived class can override these values in the `stats` dictionary
 enum Stat {
-        HP,
-        MAX_HP,
-        MP,
-        MAX_MP,
-        STRENGTH,
-        MAGIC,
-        SPEED,
-        VITALITY
-        }
+		HP,
+		MAX_HP,
+		MP,
+		MAX_MP,
+		STRENGTH,
+		MAGIC,
+		SPEED,
+		VITALITY
+		}
 
 # Base class for all combat participants (players and enemies)
 
@@ -21,10 +21,10 @@ var display_name: String = "Unnamed"
 var level: int = 1
 # Dictionary containing all mutable stats for this entity
 var stats: Dictionary = {
-                Stat.HP: 100,
-                Stat.MAX_HP: 100,
-                Stat.MP: 0,
-                Stat.MAX_MP: 0,
+		Stat.HP: 100,
+		Stat.MAX_HP: 100,
+		Stat.MP: 0,
+		Stat.MAX_MP: 0,
 		Stat.STRENGTH: 10,
 		Stat.MAGIC: 10,
 		Stat.SPEED: 10,
@@ -56,8 +56,8 @@ func update_ct(delta: float) -> void:
 
 # Called after performing an action to start charging again
 func reset_ct() -> void:
-        ct = 0.0
-        is_ready = false
+		ct = 0.0
+		is_ready = false
 
 # Decreases HP and checks for defeat
 func take_damage(amount: float) -> void:
@@ -74,8 +74,8 @@ func take_damage(amount: float) -> void:
 			
 # Calculates damage and applies it to the target. May chain multiple hits
 func perform_attack(target: CombatEntity) -> void:
-        if weapon == null or not target.is_alive:
-                return
+	if weapon == null or not target.is_alive:
+		return
 
 	var combo_count = 1
 
@@ -91,28 +91,28 @@ func perform_attack(target: CombatEntity) -> void:
 			damage *= weapon.crit_multiplier
 			is_crit = true
 
-                target.take_damage(damage)
+		target.take_damage(damage)
 
-                # Write the attack summary to the battle log
-                var log_text = "%s hits %s for %d%s (Hit %d)" % [
-                        display_name,
-                        target.display_name,
-                        damage,
-                        " CRITICAL!" if is_crit else "",
-                        combo_count
-                ]
+		# Write the attack summary to the battle log
+		var log_text = "%s hits %s for %d%s (Hit %d)" % [
+			display_name,
+			target.display_name,
+			damage,
+			" CRITICAL!" if is_crit else "",
+			combo_count
+			]
 
 		var battle_manager = get_tree().get_current_scene().get_node("BattleManager")
 		if battle_manager and battle_manager.has_method("log_action"):
 			battle_manager.log_action(log_text)
 
-                if not target.is_alive:
-                        break
+		if not target.is_alive:
+			break
 
-                # Combo continuation check
-                # Random chance to keep attacking with the same weapon
-                if randf() > weapon.combo_chance:
-                        break
+		# Combo continuation check
+		# Random chance to keep attacking with the same weapon
+		if randf() > weapon.combo_chance:
+			break
 
 		combo_count += 1
 
