@@ -9,16 +9,16 @@ func _ready() -> void:
 	level = 12
 
 	# Player stats — adjust per character
-	stats = {
-		"hp": 450,
-		"max_hp": 450,
-		"mp": 30,
-		"max_mp": 30,
-		"strength": 24,
-		"magic": 12,
-		"speed": 18,
-		"vitality": 10
-	}
+        stats = {
+                CombatEntity.Stat.HP: 450,
+                CombatEntity.Stat.MAX_HP: 450,
+                CombatEntity.Stat.MP: 30,
+                CombatEntity.Stat.MAX_MP: 30,
+                CombatEntity.Stat.STRENGTH: 24,
+                CombatEntity.Stat.MAGIC: 12,
+                CombatEntity.Stat.SPEED: 18,
+                CombatEntity.Stat.VITALITY: 10
+        }
 
 	# Initial equipment (can later be swapped via UI or inventory system)
 	weapon = preload("res://data/Weapon_Broadsword.tres")
@@ -27,6 +27,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	# Simple real-time HP bar update
-	var hp_bar = get_node("HPBar")
-	hp_bar.max_value = stats["max_hp"]
-	hp_bar.value = stats["hp"]
+        var hp_bar = get_node("HPBar")
+        hp_bar.max_value = stats[CombatEntity.Stat.MAX_HP]
+        hp_bar.value = stats[CombatEntity.Stat.HP]

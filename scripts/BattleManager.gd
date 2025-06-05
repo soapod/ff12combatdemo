@@ -6,7 +6,8 @@ class_name BattleManager
 # --- State ---
 var combatants: Array = []           # All entities participating in combat
 var action_queue: Array = []         # Queue of pending combat actions
-var is_processing_action: bool = false
+enum State { IDLE, PROCESSING }
+var state: State = State.IDLE
 
 # Called when the scene is ready
 func _ready() -> void:
@@ -24,8 +25,8 @@ func _ready() -> void:
 
 # Called every frame to manage combat flow
 func _process(delta: float) -> void:
-	if is_processing_action:
-		return
+        if state == State.PROCESSING:
+                return
 
 	for entity in combatants:
 		if entity.is_alive:
@@ -38,11 +39,11 @@ func _process(delta: float) -> void:
 					queue_action(action)
 					entity.reset_ct()
 
-	if action_queue.size() > 0:
-		var action = action_queue.pop_front()
-		is_processing_action = true
-		action.execute()
-		is_processing_action = false
+        if action_queue.size() > 0:
+                var action = action_queue.pop_front()
+                state = State.PROCESSING
+                action.execute()
+                state = State.IDLE
 
 # Adds a new action to the queue
 func queue_action(action: CombatAction) -> void:
