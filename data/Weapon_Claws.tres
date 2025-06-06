@@ -9,4 +9,5 @@ power = 18
 combo_chance = 0.1
 crit_chance = 0.1
 crit_multiplier = 1.4
+weapon_type = 0
 metadata/_custom_type_script = "uid://cyn5f511n1ote"
