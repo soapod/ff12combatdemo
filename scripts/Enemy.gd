@@ -22,7 +22,7 @@ func _ready() -> void:
 		}
 
 	# Equip a weapon (adjust per enemy)
-	weapon = preload("res://data/Weapon_Broadsword.tres")
+	weapon = preload("res://data/Weapon_Claws.tres")
 	armor = null
 	accessory = null
 

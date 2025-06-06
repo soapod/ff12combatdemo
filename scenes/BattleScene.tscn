@@ -14,4 +14,3 @@ position = Vector2(339, 104)
 
 [node name="BattleManager" type="Node" parent="."]
 script = ExtResource("3_ftvu5")
-

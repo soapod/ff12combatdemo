@@ -57,4 +57,3 @@ func get_random_enemy_for(source: CombatEntity) -> CombatEntity:
 				if entity != source and entity.is_alive:
 						return entity
 		return null
-

@@ -73,33 +73,34 @@ func perform_attack(target: CombatEntity) -> void:
 	if weapon == null or not target.is_alive:
 		return
 
-        var combo_count = 1
+	var combo_count = 1
 
-        while true:
-                var weapon_power = weapon.power
-                var base = (weapon_power * (stats.get(Stat.STRENGTH, 10) + level)) / 2.0
-                var variance = randf_range(1.0, 1.125)
-                var damage = base * variance
+	while true:
+		var weapon_power = weapon.power
+		var base = (weapon_power * (stats.get(Stat.STRENGTH, 10) + level)) / 2.0
+		var variance = randf_range(1.0, 1.125)
+		var damage = base * variance
 
 		# Critical hit check
 		var is_crit = false
-                if randf() < weapon.crit_chance:
-                        damage *= weapon.crit_multiplier
-                        is_crit = true
+		if randf() < weapon.crit_chance:
+			damage *= weapon.crit_multiplier
+			is_crit = true
 
-                target.take_damage(damage)
+		target.take_damage(damage)
 
-                var msg := "%s attacks %s with %s for %d damage! (combo x%d" % [
-                        display_name, target.display_name, weapon.name,
-                        int(damage), combo_count]
-                if is_crit:
-                        msg += ", critical"
-                msg += ")"
-                print(msg)
+		# print attack information to the console
+		var msg := "%s attacks %s with %s for %d damage! (combo x%d" % [
+		display_name, target.display_name, weapon.name,
+		int(damage), combo_count]
+		if is_crit:
+			msg += ", critical"
+		msg += ")"
+		print(msg)
 
 
-                if not target.is_alive:
-                        break
+		if not target.is_alive:
+			break
 
 		# Combo continuation check
 		# Random chance to keep attacking with the same weapon
