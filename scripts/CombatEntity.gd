@@ -96,11 +96,11 @@ func perform_attack(target: CombatEntity) -> void:
 		if is_crit:
 			msg += ", critical"
 		msg += ")"
-                print(msg)
+		print(msg)
 
-                if not target.is_alive:
-                        print("%s defeated %s!" % [display_name, target.display_name])
-                        break
+		if not target.is_alive:
+			print("%s defeated %s!" % [display_name, target.display_name])
+			break
 
 		# Combo continuation check
 		# Random chance to keep attacking with the same weapon
